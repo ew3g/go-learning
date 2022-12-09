@@ -7,6 +7,9 @@ import "fmt"
 
 // Average Finds the average of a series of numbers
 func Average(xs []float64) float64 {
+	if len(xs) == 0 {
+		return 0
+	}
 	total := float64(0)
 	for _, x := range xs {
 		total += x
@@ -16,6 +19,9 @@ func Average(xs []float64) float64 {
 
 // Minimum Finds the minimum of series of numbers
 func Minimum(xs []float64) float64 {
+	if len(xs) == 0 {
+		return 0
+	}
 	minimum := xs[0]
 	for _, x := range xs {
 		if x < minimum {
@@ -27,6 +33,9 @@ func Minimum(xs []float64) float64 {
 
 // Maximum Finds the maximum of series of numbers
 func Maximum(xs []float64) float64 {
+	if len(xs) == 0 {
+		return 0
+	}
 	maximum := xs[0]
 	for _, x := range xs {
 		if x > maximum {
