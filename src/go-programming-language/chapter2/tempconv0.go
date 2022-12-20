@@ -1,6 +1,6 @@
 // Package tempconv performs Celsius and Fahrenheit  temperature
 // computations.
-package tempconv
+package main
 
 type Celsius float64
 type Fahrenheit float64
