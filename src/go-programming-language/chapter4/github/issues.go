@@ -2,20 +2,39 @@
 package main
 
 import (
-	"fmt"
 	"go-learning/src/go-programming-language/chapter4/github/githubp"
+	"html/template"
 	"log"
 	"os"
+	"time"
 )
 
+const templ = `{{.TotalCount}} issues: 
+	{{range .Items}}---------------------------------------------------
+	Number: {{.Number}}
+	User:   {{.User.Login}}
+	Title:  {{.Title | print "%.64s"}}
+	Age:    {{.CreatedAt | daysAgo}} days
+	{{end}}`
+
+var report, err = template.New("report").
+	Funcs(template.FuncMap{"daysAgo": daysAgo}).
+	Parse(templ)
+
 func main() {
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	result, err := githubp.SearchIssues(os.Args[1:])
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%d issues:\n", result.TotalCount)
-	for _, item := range result.Items {
-		fmt.Printf("#%-5d %9.9s %.55s\n",
-			item.Number, item.User.Login, item.Title)
+	if err := report.Execute(os.Stdout, result); err != nil {
+		log.Fatal(err)
 	}
+}
+
+func daysAgo(t time.Time) int {
+	return int(time.Since(t).Hours() / 24)
 }
