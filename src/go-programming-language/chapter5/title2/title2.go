@@ -25,6 +25,7 @@ func title(url string) error {
 	}
 
 	// ... print doc's title element...
+	fmt.Println(doc)
 
 	return nil
 }
